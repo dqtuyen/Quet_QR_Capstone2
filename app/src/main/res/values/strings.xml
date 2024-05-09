@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Capstone 2</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="web_client_id">1069924781685-e8f9vubgar7vvqnh177mro3v9lc3ho2a.apps.googleusercontent.com</string>
+    <string name="google_sign_in_button">Google Sign-in Button</string>
+</resources>
