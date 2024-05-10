@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Size;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -50,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         else{
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 101);
         }
+
+
+        keyAuthen(key);
     }
 
     private void init() {
@@ -106,8 +110,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Preview preview = new Preview.Builder().build();
-        CameraSelector cameraSelector = new CameraSelector.Builder().requireLensFacing (CameraSelector.LENS_FACING_BACK).build();
+        CameraSelector cameraSelector = new CameraSelector.Builder().requireLensFacing (CameraSelector.LENS_FACING_FRONT).build();
         preview.setSurfaceProvider (previewView.getSurfaceProvider());
         processCameraProvider.bindToLifecycle (this, cameraSelector, imageAnalysis, preview);
+    }
+
+    String key = "4:1715328016773:2ec3799b7582e481c022e224c1825879";
+    String token_user = "dN9r8sY4";
+    private void keyAuthen(String keyQR) {
+
+        String[] parts = splitString(keyQR);
+
+        String uid_QR = parts[0];
+        long millis_QR = Long.parseLong(parts[1]);
+        String md5Enc_QR = parts[2];
+
+        System.out.println("UID: " + uid_QR);
+        System.out.println("Millis: " + millis_QR);
+        System.out.println("MD5Enc: " + md5Enc_QR);
+
+        MD5Encoder md5Encoder = new MD5Encoder();
+
+        String md5Enc_check = md5Encoder.encodeToMD5(token_user + millis_QR);
+
+        long currentTimeMillis = System.currentTimeMillis();
+        long timeLimited = currentTimeMillis - millis_QR;
+        if(timeLimited < 65000) {
+
+            Log.d("Test", "Mã QR còn hạn sử dụng");
+            if(md5Enc_QR.contains(md5Enc_check)) {
+                Log.d("Test", md5Enc_QR + "\n" + md5Enc_check + "\n" + "Xác nhận trùng mã khóa");
+            } else {
+                Log.d("Test", md5Enc_QR + "\n" + md5Enc_check);
+                Log.d("Test", "Xác nhận khóa thất bại");
+            }
+
+        } else {
+            Log.d("Test", "Mã QR đã hết hạn sử dụng");
+        }
+    }
+
+    public static String[] splitString(String input) {
+        return input.split(":");
     }
 }
