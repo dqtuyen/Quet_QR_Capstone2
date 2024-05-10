@@ -9,13 +9,12 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface ApiService {
-    @GET("api/users/email")
-    Call<List<String>> getEmails();
+    @GET("api/emaillocation")
+    Call<List<EmailLocation>> getEmailLocations();
+    @GET("api/users/email/{email}")
+    Call<User> getUserByEmail(@Path("email") String email);
 
-    //@GET("api/users/email/{email}")
-    //Call<User> getUserByEmail(@Path("email") String email);
-    @GET("api/transaction-history/{userId}")
-    Call<List<SurfaceControl.Transaction>> getTransactionHistory(@Path("userId") int userId);
-
+    @GET("api/users/token/{user_id}")
+    Call<TokenResponse> getUserToken(@Path("user_id") String userId);
 }
 
