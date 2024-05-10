@@ -140,13 +140,16 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Test", "Mã QR còn hạn sử dụng");
             if(md5Enc_QR.contains(md5Enc_check)) {
                 Log.d("Test", md5Enc_QR + "\n" + md5Enc_check + "\n" + "Xác nhận trùng mã khóa");
+                qrCodeTxt.setText("Xác nhận trùng mã khóa");
             } else {
                 Log.d("Test", md5Enc_QR + "\n" + md5Enc_check);
                 Log.d("Test", "Xác nhận khóa thất bại");
+                qrCodeTxt.setText("Xác nhận khóa thất bại");
             }
 
         } else {
             Log.d("Test", "Mã QR đã hết hạn sử dụng");
+            qrCodeTxt.setText("Mã QR đã hết hạn sử dụng");
         }
     }
 
